@@ -25,6 +25,7 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 	Super::PlayerTick(DeltaTime);
 
 	CursorTrace();
+	AutoRun();
 }
 
 // PROTECTED
@@ -131,7 +132,7 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 	}
 
 	// We are releasing after moving, not after using an ability
-	APawn* ControlledPawn{ GetPawn() };
+	const APawn* ControlledPawn{ GetPawn() };
 
 	// Check to see if this was a short press, i.e., if we are pathing to a point clicked
 	if (FollowTime <= ShortPressThreshold && ControlledPawn)
@@ -146,6 +147,7 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 				DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Green, false, 5.f);
 			}
 
+			CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() - 1];
 			bAutoRunning = true;
 		}
 	}
@@ -177,6 +179,26 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 	{
 		const FVector WorldDirection{ (CachedDestination - ControlledPawn->GetActorLocation()).GetSafeNormal() };
 		ControlledPawn->AddMovementInput(WorldDirection);
+	}
+}
+
+void AAuraPlayerController::AutoRun()
+{
+	if (!bAutoRunning) return;
+
+	if (APawn* ControlledPawn{ GetPawn() })
+	{
+		const FVector LocationOnSpline{
+			Spline->FindLocationClosestToWorldLocation(ControlledPawn->GetActorLocation(), ESplineCoordinateSpace::World) };
+		const FVector Direction{
+			Spline->FindDirectionClosestToWorldLocation(LocationOnSpline, ESplineCoordinateSpace::World) };
+		ControlledPawn->AddMovementInput(Direction);
+
+		const float DistanceToDestination{ static_cast<float>((LocationOnSpline - CachedDestination).Length()) };
+		if (DistanceToDestination <= AutoRunAcceptanceRadius)
+		{
+			bAutoRunning = false;
+		}
 	}
 }
 

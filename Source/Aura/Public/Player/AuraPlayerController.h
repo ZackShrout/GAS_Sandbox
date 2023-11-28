@@ -37,6 +37,7 @@ private:
 	void AbilityInputTagPressed(FGameplayTag InputTag);
 	void AbilityInputTagReleased(FGameplayTag InputTag);
 	void AbilityInputTagHeld(FGameplayTag InputTag);
+	void AutoRun();
 	UAuraAbilitySystemComponent* GetASC();
 	
 	UPROPERTY(EditAnywhere, Category = "Input")
