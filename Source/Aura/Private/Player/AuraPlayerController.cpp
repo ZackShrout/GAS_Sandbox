@@ -76,37 +76,16 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 
 void AAuraPlayerController::CursorTrace()
 {
-	FHitResult CursorHit;
 	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
 	if (!CursorHit.bBlockingHit) return;
 
 	LastActor = ThisActor;
 	ThisActor = Cast<IEnemyInterface>(CursorHit.GetActor());
 
-	if (!LastActor)
+	if (LastActor != ThisActor)
 	{
-		if (ThisActor)
-			// Player was not hovering over enemy last frame, but is now hovering over new enemy
-			ThisActor->HighlightActor();
-
-		// Else, player is not hovering over an enemy at all, so do nothing
-	}
-	else
-	{
-		if (!ThisActor)
-			// Player stopped hovering over an enemy
-			LastActor->UnhighlightActor();
-		else
-		{
-			if (LastActor != ThisActor)
-			{
-				// Player was hovering over an enemy, but has now started hovering over a new enemy
-				LastActor->UnhighlightActor();
-				ThisActor->HighlightActor();
-			}
-
-			// Else, player is still hovering over same enemy, so do nothing
-		}
+		if (LastActor) LastActor->UnhighlightActor();
+		if (ThisActor) ThisActor->HighlightActor();
 	}
 }
 
@@ -144,7 +123,6 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 			for (const auto& PointLoc : NavPath->PathPoints)
 			{
 				Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
-				DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Green, false, 5.f);
 			}
 
 			CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() - 1];
@@ -170,10 +148,9 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 
 	// We are moving, not using an ability
 	FollowTime += GetWorld()->GetDeltaSeconds();
-	FHitResult Hit;
 	
-	if (GetHitResultUnderCursor(ECC_Visibility, false, Hit))
-		CachedDestination = Hit.ImpactPoint;
+	if (CursorHit.bBlockingHit)
+		CachedDestination = CursorHit.ImpactPoint;
 
 	if (APawn* ControlledPawn{ GetPawn() })
 	{

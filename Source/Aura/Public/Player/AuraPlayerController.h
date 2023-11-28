@@ -58,6 +58,8 @@ private:
 	bool bTargeting{ false };
 	// ** End Enemy Highlighting
 
+	FHitResult CursorHit;
+
 	// Click to Move **
 	FVector CachedDestination{ FVector::ZeroVector };
 	float FollowTime{ 0.f };
