@@ -12,6 +12,7 @@ class UAuraInputConfig;
 class UInputMappingContext;
 class UInputAction;
 class IEnemyInterface;
+class USplineComponent;
 struct FInputActionValue;
 
 /**
@@ -49,7 +50,23 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<UAuraAbilitySystemComponent> AuraAbilitySystemComponent;
-	
+
+	// Enemy Highlighting **
 	IEnemyInterface* LastActor;
 	IEnemyInterface* ThisActor;
+	bool bTargeting{ false };
+	// ** End Enemy Highlighting
+
+	// Click to Move **
+	FVector CachedDestination{ FVector::ZeroVector };
+	float FollowTime{ 0.f };
+	float ShortPressThreshold{ 0.5f };
+	bool bAutoRunning{ false };
+
+	UPROPERTY(EditDefaultsOnly)
+	float AutoRunAcceptanceRadius{ 50.f };
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USplineComponent> Spline;
+	// ** End Click to Move
 };
