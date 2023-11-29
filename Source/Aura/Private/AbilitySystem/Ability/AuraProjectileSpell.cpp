@@ -13,7 +13,12 @@ void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 
-	if (!HasAuthority(&ActivationInfo)) return;
+	
+}
+
+void UAuraProjectileSpell::SpawnProjectile()
+{
+	if (!GetAvatarActorFromActorInfo()->HasAuthority()) return;
 
 	if (ICombatInterface* CombatInterface{ Cast<ICombatInterface>(GetAvatarActorFromActorInfo()) })
 	{
@@ -24,9 +29,9 @@ void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 
 		AAuraProjectile* Projectile{
 			GetWorld()->SpawnActorDeferred<AAuraProjectile>(ProjectileClass, SpawnTransform,
-			                                                GetOwningActorFromActorInfo(),
-			                                                Cast<APawn>(GetOwningActorFromActorInfo()),
-			                                                ESpawnActorCollisionHandlingMethod::AlwaysSpawn)};
+															GetOwningActorFromActorInfo(),
+															Cast<APawn>(GetOwningActorFromActorInfo()),
+															ESpawnActorCollisionHandlingMethod::AlwaysSpawn)};
 
 		// TODO: Give projectile a gameplay effect spec to deal damage
 
