@@ -54,6 +54,8 @@ void AAuraPlayerController::SetupInputComponent()
 
 	UAuraInputComponent* AuraInputComponent = CastChecked<UAuraInputComponent>(InputComponent);
 	AuraInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAuraPlayerController::Move);
+	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Started, this, &AAuraPlayerController::ShiftPressed);
+	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Completed, this, &AAuraPlayerController::ShiftReleased);
 	AuraInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 }
 
@@ -100,17 +102,13 @@ void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 
 void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
-	// Check to see if we are releasing after using an ability
-	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB) ||
-		bTargeting)
-	{
-		if (GetASC())
-			GetASC()->AbilityInputTagReleased(InputTag);
+	if (GetASC())
+		GetASC()->AbilityInputTagReleased(InputTag);
 
-		return;
-	}
+	// Bypass movement if this is not LMB or we are releasing after using an ability
+	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB) || bTargeting || bShiftKeyDown) return;
 
-	// We are releasing after moving, not after using an ability
+	// We are releasing LMB after moving, not after using an ability
 	const APawn* ControlledPawn{ GetPawn() };
 
 	// Check to see if this was a short press, i.e., if we are pathing to a point clicked
@@ -138,7 +136,7 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
 	// Check to see if we are using an ability
 	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB) ||
-		bTargeting)
+		bTargeting || bShiftKeyDown)
 	{
 		if (GetASC())
 			GetASC()->AbilityInputTagHeld(InputTag);
@@ -177,6 +175,16 @@ void AAuraPlayerController::AutoRun()
 			bAutoRunning = false;
 		}
 	}
+}
+
+void AAuraPlayerController::ShiftPressed()
+{
+	bShiftKeyDown = true;
+}
+
+void AAuraPlayerController::ShiftReleased()
+{
+	bShiftKeyDown = false;
 }
 
 UAuraAbilitySystemComponent* AAuraPlayerController::GetASC()

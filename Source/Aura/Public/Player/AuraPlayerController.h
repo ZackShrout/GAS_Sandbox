@@ -38,6 +38,8 @@ private:
 	void AbilityInputTagReleased(FGameplayTag InputTag);
 	void AbilityInputTagHeld(FGameplayTag InputTag);
 	void AutoRun();
+	void ShiftPressed();
+	void ShiftReleased();
 	UAuraAbilitySystemComponent* GetASC();
 	
 	UPROPERTY(EditAnywhere, Category = "Input")
@@ -46,11 +48,16 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> MoveAction;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> ShiftAction;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UAuraInputConfig> InputConfig;
 
 	UPROPERTY()
 	TObjectPtr<UAuraAbilitySystemComponent> AuraAbilitySystemComponent;
+
+	bool bShiftKeyDown{ false };
 
 	// Enemy Highlighting **
 	IEnemyInterface* LastActor;
