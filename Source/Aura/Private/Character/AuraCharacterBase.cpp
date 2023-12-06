@@ -13,6 +13,7 @@ AAuraCharacterBase::AAuraCharacterBase()
 	PrimaryActorTick.bCanEverTick = false;
 
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	GetCapsuleComponent()->SetGenerateOverlapEvents(false);
 	
 	USkeletalMeshComponent* Mesh{ GetMesh() };
 	Mesh->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
