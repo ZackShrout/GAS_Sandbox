@@ -20,11 +20,19 @@ class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInte
 
 public:
 	AAuraCharacterBase();
+
+	UFUNCTION(NetMulticast, Reliable)
+	virtual void MulticastHandleDeath();
+	
+	// Combat Interface
+	virtual void Die() override;
+	// End Combat Interface
+	
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 	virtual FVector GetCombatSocketLocation() override;
-
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
+	
 protected:
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo();
