@@ -42,6 +42,9 @@ struct FAuraGameplayTags
  // COMBAT
  FGameplayTag Damage;
 
+ // EFFECTS
+ FGameplayTag Effects_HitReact;
+
 private:
  static FAuraGameplayTags GameplayTags;
 };
