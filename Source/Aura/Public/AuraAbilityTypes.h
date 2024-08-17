@@ -1,3 +1,5 @@
+// Copyright BunnySoft.
+
 #pragma once
 
 #include "GameplayEffectTypes.h"
