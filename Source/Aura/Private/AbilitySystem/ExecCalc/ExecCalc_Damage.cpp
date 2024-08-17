@@ -116,17 +116,10 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().CriticalHitDamageDef, EvaluationParameters, SourceCriticalHitDamage);
 	SourceCriticalHitDamage = FMath::Max<float>(SourceCriticalHitDamage, 0.f);
 
-	GEngine->AddOnScreenDebugMessage(-10, 1.f, FColor::Yellow, FString::Printf(TEXT("Source Crit Chance: %f"), SourceCriticalHitChance));
-	GEngine->AddOnScreenDebugMessage(-10, 1.f, FColor::Yellow, FString::Printf(TEXT("Source Crit Damage: %f"), SourceCriticalHitDamage));
-	GEngine->AddOnScreenDebugMessage(-10, 1.f, FColor::Yellow, FString::Printf(TEXT("Target Crit Reistance: %f"), TargetCriticalHitResistance));
-
 	const FRealCurve* CriticalHitResistanceCurve{ CharacterClassInfo->DamageCalculationCoefficients->FindCurve(FName("CriticalHitResistance"), FString()) };
 	const float CriticalHitResistanceCoefficient{ CriticalHitResistanceCurve->Eval(TargetCombatInterface->GetPlayerLevel()) };
-
-	const float EffectiveCriticalChance{ SourceCriticalHitChance - TargetCriticalHitResistance * CriticalHitResistanceCoefficient };
-
-	GEngine->AddOnScreenDebugMessage(-10, 1.f, FColor::Yellow, FString::Printf(TEXT("Effective Crit Chance: %f"), EffectiveCriticalChance));
 	
+	const float EffectiveCriticalChance{ SourceCriticalHitChance - TargetCriticalHitResistance * CriticalHitResistanceCoefficient };
 	const bool bCriticalHit{ FMath::RandRange(1, 100) < EffectiveCriticalChance };
 
 	if (bCriticalHit) Damage = (Damage * 2.f) + SourceCriticalHitDamage;
