@@ -73,7 +73,12 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	FGameplayEffectContextHandle EffectContextHandle{ Spec.GetContext() };
 
 	// Get damage set by caller magnitude
-	float Damage{ Spec.GetSetByCallerMagnitude(FAuraGameplayTags::Get().Damage) };
+	float Damage{ 0.f };
+	for (const auto& Pair : FAuraGameplayTags::Get().DamageTypesToResistances)
+	{
+		const float DamageTypeValue{ Spec.GetSetByCallerMagnitude(Pair.Key) }; // GetSetByCallerMagnitude will return 0.f if damage type not found
+		Damage += DamageTypeValue;
+	}
 
 	/*** Block Chance ***/
 	float TargetBlockChance{ 0.f };

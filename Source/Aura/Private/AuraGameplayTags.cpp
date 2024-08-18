@@ -68,6 +68,23 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("Attributes.Secondary.MaxMana"),
 		FString("The total amount of Mana a character can have"));
 
+	// RESISTANCES
+	GameplayTags.Attributes_Resistance_Fire = TagManager.AddNativeGameplayTag(
+		FName("Attributes.Resistance.Fire"),
+		FString("Resistance to Fire Damage"));
+
+	GameplayTags.Attributes_Resistance_Lightning = TagManager.AddNativeGameplayTag(
+		FName("Attributes.Resistance.Lightning"),
+		FString("Resistance to Lightning Damage"));
+
+	GameplayTags.Attributes_Resistance_Arcane = TagManager.AddNativeGameplayTag(
+		FName("Attributes.Resistance.Arcane"),
+		FString("Resistance to Arcane Damage"));
+
+	GameplayTags.Attributes_Resistance_Physical = TagManager.AddNativeGameplayTag(
+		FName("Attributes.Resistance.Physical"),
+		FString("Resistance to Physical Damage"));
+
 	// Input Tags
 	GameplayTags.InputTag_LMB = TagManager.AddNativeGameplayTag(
 		FName("InputTag.LMB"),
@@ -98,8 +115,30 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("Damage"),
 		FString("Damage"));
 
+	GameplayTags.Damage_Fire = TagManager.AddNativeGameplayTag(
+		FName("Damage.Fire"),
+		FString("Fire Damage Type"));
+
+	GameplayTags.Damage_Lightning = TagManager.AddNativeGameplayTag(
+		FName("Damage.Lightning"),
+		FString("Lightning Damage Type"));
+
+	GameplayTags.Damage_Arcane = TagManager.AddNativeGameplayTag(
+		FName("Damage.Arcane"),
+		FString("Arcane Damage Type"));
+
+	GameplayTags.Damage_Physical = TagManager.AddNativeGameplayTag(
+		FName("Damage.Physical"),
+		FString("Physical Damage Type"));
+
 	// EFFECTS
 	GameplayTags.Effects_HitReact = TagManager.AddNativeGameplayTag(
 		FName("Effects.HitReact"),
 		FString("Tag granted when Hit Reacting"));
+
+	// Map of Damage Types to Resistances
+	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Fire, GameplayTags.Attributes_Resistance_Fire);
+	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Lightning, GameplayTags.Attributes_Resistance_Lightning);
+	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Arcane, GameplayTags.Attributes_Resistance_Arcane);
+	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Physical, GameplayTags.Attributes_Resistance_Physical);
 }

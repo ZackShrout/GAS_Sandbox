@@ -52,9 +52,13 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& TargetLocation)
 		
 		const FGameplayEffectSpecHandle SpecHandle{ SourceASC->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), EffectContextHandle) };
 
-		const float ScaledDamage{ Damage.GetValueAtLevel(10.f) }; // Hard coded for testing, switch back to GetAbilityLevel()
 		const FAuraGameplayTags GameplayTags{ FAuraGameplayTags::Get() };
-		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, GameplayTags.Damage, ScaledDamage);
+
+		for (const auto& Pair : DamageTypes)
+		{
+			const float ScaledDamage{ Pair.Value.GetValueAtLevel(GetAbilityLevel()) };
+			UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, Pair.Key, ScaledDamage);
+		}
 		
 		Projectile->DamageEffectSpecHandle = SpecHandle;
 

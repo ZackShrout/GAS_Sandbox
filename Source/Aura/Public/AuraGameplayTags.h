@@ -31,6 +31,12 @@ struct FAuraGameplayTags
  FGameplayTag Attributes_Secondary_MaxHealth;
  FGameplayTag Attributes_Secondary_MaxMana;
 
+ // RESISTANCE
+ FGameplayTag Attributes_Resistance_Fire;
+ FGameplayTag Attributes_Resistance_Lightning;
+ FGameplayTag Attributes_Resistance_Arcane;
+ FGameplayTag Attributes_Resistance_Physical;
+ 
  // INPUT
  FGameplayTag InputTag_LMB;
  FGameplayTag InputTag_RMB;
@@ -41,6 +47,12 @@ struct FAuraGameplayTags
 
  // COMBAT
  FGameplayTag Damage;
+ FGameplayTag Damage_Fire;
+ FGameplayTag Damage_Lightning;
+ FGameplayTag Damage_Arcane;
+ FGameplayTag Damage_Physical;
+ 
+ TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
 
  // EFFECTS
  FGameplayTag Effects_HitReact;
