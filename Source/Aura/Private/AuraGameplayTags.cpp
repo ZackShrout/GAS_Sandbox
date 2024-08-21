@@ -110,7 +110,7 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("InputTag.4"),
 		FString("Input tag for the 4 key"));
 
-	// COMBAT
+	// DAMAGE
 	GameplayTags.Damage = TagManager.AddNativeGameplayTag(
 		FName("Damage"),
 		FString("Damage"));
@@ -130,6 +130,11 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Damage_Physical = TagManager.AddNativeGameplayTag(
 		FName("Damage.Physical"),
 		FString("Physical Damage Type"));
+
+	// ABILITIES
+	GameplayTags.Abilities_Attack = TagManager.AddNativeGameplayTag(
+		FName("Abilities.Attack"),
+		FString("Attack Ability Tag"));
 
 	// EFFECTS
 	GameplayTags.Effects_HitReact = TagManager.AddNativeGameplayTag(

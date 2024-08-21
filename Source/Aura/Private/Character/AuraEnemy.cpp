@@ -63,7 +63,7 @@ void AAuraEnemy::BeginPlay()
 	
 	InitAbilityActorInfo();
 	if (HasAuthority()) // Only Server should do this... GameMode will be NULL on clients
-		UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
+		UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent, CharacterClass);
 
 	if (UAuraUserWidget* AuraUserWidget{ Cast<UAuraUserWidget>(HealthBar->GetUserWidgetObject()) })
 		AuraUserWidget->SetWidgetController(this);

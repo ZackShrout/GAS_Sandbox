@@ -45,7 +45,7 @@ struct FAuraGameplayTags
  FGameplayTag InputTag_3;
  FGameplayTag InputTag_4;
 
- // COMBAT
+ // DAMAGE
  FGameplayTag Damage;
  FGameplayTag Damage_Fire;
  FGameplayTag Damage_Lightning;
@@ -53,6 +53,9 @@ struct FAuraGameplayTags
  FGameplayTag Damage_Physical;
  
  TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
+
+ // ABILITIES
+ FGameplayTag Abilities_Attack;
 
  // EFFECTS
  FGameplayTag Effects_HitReact;
