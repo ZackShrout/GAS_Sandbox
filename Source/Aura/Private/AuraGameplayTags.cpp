@@ -141,6 +141,19 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("Effects.HitReact"),
 		FString("Tag granted when Hit Reacting"));
 
+	// MONTAGE
+	GameplayTags.Montage_Attack_Weapon = TagManager.AddNativeGameplayTag(
+		FName("Montage.Attack.Weapon"),
+		FString("Weapon"));
+
+	GameplayTags.Montage_Attack_RightHand = TagManager.AddNativeGameplayTag(
+		FName("Montage.Attack.RightHand"),
+		FString("Right Hand"));
+
+	GameplayTags.Montage_Attack_LeftHand = TagManager.AddNativeGameplayTag(
+		FName("Montage.Attack.LeftHand"),
+		FString("Left Hand"));
+	
 	// Map of Damage Types to Resistances
 	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Fire, GameplayTags.Attributes_Resistance_Fire);
 	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Lightning, GameplayTags.Attributes_Resistance_Lightning);
