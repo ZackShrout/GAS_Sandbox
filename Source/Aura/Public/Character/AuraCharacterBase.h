@@ -30,7 +30,7 @@ public:
 	
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
-	virtual FVector GetCombatSocketLocation() override;
+	virtual FVector GetCombatSocketLocation_Implementation() override;
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
 	
 protected:
