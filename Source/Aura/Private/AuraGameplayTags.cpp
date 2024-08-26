@@ -141,18 +141,35 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("Effects.HitReact"),
 		FString("Tag granted when Hit Reacting"));
 
-	// MONTAGE
-	GameplayTags.Montage_Attack_Weapon = TagManager.AddNativeGameplayTag(
-		FName("Montage.Attack.Weapon"),
+	// COMBAT SOCKETS
+	GameplayTags.CombatSocket_Weapon = TagManager.AddNativeGameplayTag(
+		FName("CombatSocket.Weapon"),
 		FString("Weapon"));
 
-	GameplayTags.Montage_Attack_RightHand = TagManager.AddNativeGameplayTag(
-		FName("Montage.Attack.RightHand"),
+	GameplayTags.CombatSocket_RightHand = TagManager.AddNativeGameplayTag(
+		FName("CombatSocket.RightHand"),
 		FString("Right Hand"));
 
-	GameplayTags.Montage_Attack_LeftHand = TagManager.AddNativeGameplayTag(
-		FName("Montage.Attack.LeftHand"),
+	GameplayTags.CombatSocket_LeftHand = TagManager.AddNativeGameplayTag(
+		FName("CombatSocket.LeftHand"),
 		FString("Left Hand"));
+
+	// MONTAGE
+	GameplayTags.Montage_Attack_1 = TagManager.AddNativeGameplayTag(
+		FName("Montage.Attack.1"),
+		FString("Attack 1"));
+
+	GameplayTags.Montage_Attack_2 = TagManager.AddNativeGameplayTag(
+		FName("Montage.Attack.2"),
+		FString("Attack 2"));
+
+	GameplayTags.Montage_Attack_3 = TagManager.AddNativeGameplayTag(
+		FName("Montage.Attack.3"),
+		FString("Attack 3"));
+
+	GameplayTags.Montage_Attack_4 = TagManager.AddNativeGameplayTag(
+		FName("Montage.Attack.4"),
+		FString("Attack 4"));
 	
 	// Map of Damage Types to Resistances
 	GameplayTags.DamageTypesToResistances.Add(GameplayTags.Damage_Fire, GameplayTags.Attributes_Resistance_Fire);
