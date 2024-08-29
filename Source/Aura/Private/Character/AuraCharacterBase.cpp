@@ -17,10 +17,10 @@ AAuraCharacterBase::AAuraCharacterBase()
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	GetCapsuleComponent()->SetGenerateOverlapEvents(false);
 	
-	USkeletalMeshComponent* Mesh{ GetMesh() };
-	Mesh->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
-	Mesh->SetCollisionResponseToChannel(ECC_PROJECTILE, ECR_Overlap);
-	Mesh->SetGenerateOverlapEvents(true);
+	USkeletalMeshComponent* CharacterMesh{ GetMesh() };
+	CharacterMesh->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	CharacterMesh->SetCollisionResponseToChannel(ECC_PROJECTILE, ECR_Overlap);
+	CharacterMesh->SetGenerateOverlapEvents(true);
 
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	Weapon->SetupAttachment(GetMesh(), FName("WeaponHandSocket"));
