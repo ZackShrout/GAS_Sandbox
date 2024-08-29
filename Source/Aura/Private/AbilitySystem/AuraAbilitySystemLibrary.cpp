@@ -136,13 +136,15 @@ void UAuraAbilitySystemLibrary::SetIsCriticalHit(FGameplayEffectContextHandle& E
 
 void UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius(const UObject* WorldContextObject,
 	TArray<AActor*>& OutOverlappingActors, const TArray<AActor*>& ActorsToIgnore, float Radius,
-	const FVector& SphereOrigin)
+	const FVector& SphereOrigin, const bool bDrawDebugSphere/* = false*/)
 {
+	const UWorld* World{ GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull) }
+
 	FCollisionQueryParams SphereParams;
 	SphereParams.AddIgnoredActors(ActorsToIgnore);
 
 	TArray<FOverlapResult> Overlaps;
-	if (const UWorld* World{ GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull) })
+	if (World)
 	{
 		World->OverlapMultiByObjectType(
 			Overlaps, SphereOrigin, FQuat::Identity,
@@ -158,6 +160,10 @@ void UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius(const UObject* WorldC
 			}
 		}
 	}
+
+	if (bDrawDebugSphere && World)
+		DrawDebugSphere(World, SphereOrigin, Radius, 12.f, FColor::Red, false, 3.f);
+
 }
 
 bool UAuraAbilitySystemLibrary::IsNotFriend(AActor* FirstActor, AActor* SecondActor)
